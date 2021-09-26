@@ -46,3 +46,5 @@ If you just want to read DVPL file's footer, use this:
 DVPLFooterData info = DVPL.readDVPLFooter(File.ReadAllBytes(@"C:\file.txt.dvpl"))
 ```
 I think you can figure out what to do next by yourself.
+#
+It have not been tested on not-text files yet as I am busy now with some other projects. So, if there will be problems with non-text files, I will fix them, but it will take some time.
