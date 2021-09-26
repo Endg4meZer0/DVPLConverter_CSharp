@@ -2,6 +2,11 @@
 It is representation of Maddoxkkm's converter on Node.JS.
 https://github.com/Maddoxkkm/dvpl_converter
 
+# Requires
+1. .NET Framework >= 4.5
+2. K4os.Compression.LZ4
+3. Force.Crc32
+
 # How-To-Use
 There are 3 methods and 1 class that might need you.
 
