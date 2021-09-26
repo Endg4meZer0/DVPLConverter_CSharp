@@ -15,6 +15,10 @@ Let's start with what everybody is looking for.
 ## `decompressDVPL`
 It is meant to be used, for example, like this:
 ```cs
+using DVPLConverter;
+
+...
+
 try{
   byte[] decompressed = DVPL.decompressDVPL(File.ReadAllBytes(@"C:\file.txt.dvpl"));
   File.WriteAllBytes(@"C:\file.txt", decompressed);
