@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using K4os.Compression.LZ4;
 using Force.Crc32;
 
-namespace BlitzCamoCreator
+namespace NAMEYOURSPACE
 {
     class DVPL
     {
