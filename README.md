@@ -17,10 +17,10 @@ It is meant to be used, for example, like this:
 ```cs
 using DVPLConverter;
 
-...
+DVPL DVPLConv = new DVPL();
 
 try{
-  byte[] decompressed = DVPL.decompressDVPL(File.ReadAllBytes(@"C:\file.txt.dvpl"));
+  byte[] decompressed = DVPLConv.decompressDVPL(File.ReadAllBytes(@"C:\file.txt.dvpl"));
   File.WriteAllBytes(@"C:\file.txt", decompressed);
 }catch{ Console.WriteLine("exception lol") }
 ```
@@ -31,12 +31,12 @@ There are two variants of method.
 Firstly, original .tex files don't use compression (their compression level is 0), but other files do (their compression level is 2).
 That's why if you want to use this method for compressing **exact files**, you should use this:
 ```cs
-byte[] compressed = DVPL.compressDVPL(File.ReadAllBytes(@"C:\file.txt"), ".txt");
+byte[] compressed = DVPLConv.compressDVPL(File.ReadAllBytes(@"C:\file.txt"), ".txt");
 ```
 As you see, there is a second argument, which is used to specify extension of file. If you type **".tex"**, it will set compression level to 0 for this file.
 But if you are compressing, for example, other buffers of data, or you won't use it for .tex files, you can use simplified version:
 ```cs
-byte[] compressed = DVPL.compressDVPL(File.ReadAllBytes(@"C:\file.txt"));
+byte[] compressed = DVPLConv.compressDVPL(File.ReadAllBytes(@"C:\file.txt"));
 ```
 In that case compression level is always set to 2.
 
@@ -52,7 +52,7 @@ They are all ***uint***.
 ## `readDVPLFooter`
 If you just want to read DVPL file's footer, use this:
 ```cs
-DVPLFooterData info = DVPL.readDVPLFooter(File.ReadAllBytes(@"C:\file.txt.dvpl"))
+DVPLFooterData info = DVPLConv.readDVPLFooter(File.ReadAllBytes(@"C:\file.txt.dvpl"))
 ```
 I think you can figure out what to do next by yourself.
 #
