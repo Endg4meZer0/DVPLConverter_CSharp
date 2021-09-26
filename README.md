@@ -3,7 +3,7 @@ It is representation of Maddoxkkm's converter on Node.JS.
 https://github.com/Maddoxkkm/dvpl_converter
 
 # Requires
-1. .NET Framework >= 4.5
+1. .NET Framework >=4.5
 2. K4os.Compression.LZ4
 3. Force.Crc32
 
