@@ -44,7 +44,7 @@ In that case compression level is always set to 2.
 It consists of four elements, which are included into any DVPL file:
 1. Original size of file - `oSize`
 2. Compressed size of file - `cSize`
-3. CRC32 of original file - `crc32`
+3. CRC32 of compressed file without footer - `crc32`
 4. Type (level) of compression - `type`
 
 They are all ***uint***.
