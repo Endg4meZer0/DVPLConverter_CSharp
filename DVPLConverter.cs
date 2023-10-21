@@ -16,9 +16,21 @@ namespace DVPLConverter
 
         public class DVPLFooterData
         {
+            /// <summary>
+            /// The original (de- or not yet compressed) size of the file.
+            /// </summary>
             public uint oSize { get; set; }
+            /// <summary>
+            /// The compressed size of the file. Footer data is not included.
+            /// </summary>
             public uint cSize { get; set; }
+            /// <summary>
+            /// The CRC32 summ of compressed file. Footer data is not included.
+            /// </summary>
             public uint crc32 { get; set; }
+            /// <summary>
+            /// The type of compression. Usually equals 2, but for .tex files it is 0.
+            /// </summary>
             public uint type { get; set; }
         }
 
@@ -26,8 +38,8 @@ namespace DVPLConverter
         /// Reads DVPL footer and returns its data.
         /// </summary>
         /// <param name="buffer">Array of bytes (usually from file), where program will search data.</param>
-        /// <returns>DVPL footer data, using class for it.</returns>
-        public DVPLFooterData readDVPLFooter(byte[] buffer)
+        /// <returns>DVPL footer data, using its own class.</returns>
+        public static DVPLFooterData readDVPLFooter(byte[] buffer)
         {
             //easy guide to edit arrays in csharp lol
             byte[] footerBuffer = buffer.Reverse().Take(20).Reverse().ToArray();
@@ -54,7 +66,7 @@ namespace DVPLConverter
         /// <param name="crc">CRC32, computed from original file</param>
         /// <param name="typ">Type of used compression (".tex" files use 0, other - 2)</param>
         /// <returns>Array of bytes which is ready for concat with main array.</returns>
-        public byte[] toDVPLFooter(uint oS, uint cS, uint crc, uint typ)
+        public static byte[] toDVPLFooter(uint oS, uint cS, uint crc, uint typ)
         {
             List<byte> result = new List<byte>();
             result.AddRange(BitConverter.GetBytes(oS));
@@ -71,7 +83,7 @@ namespace DVPLConverter
         /// </summary>
         /// <param name="buffer">Array of bytes to decompress (usually from file)</param>
         /// <returns>Decompressed array of bytes</returns>
-        public byte[] decompressDVPL(byte[] buffer)
+        public static byte[] decompressDVPL(byte[] buffer)
         {
             DVPLFooterData footerData = readDVPLFooter(buffer);
             byte[] targetBlock = buffer.Reverse().Skip(20).Reverse().ToArray();
@@ -108,7 +120,7 @@ namespace DVPLConverter
         /// </summary>
         /// <param name="buffer">Array of bytes to compress</param>
         /// <returns></returns>
-        public byte[] compressDVPL(byte[] buffer)
+        public static byte[] compressDVPL(byte[] buffer)
         {
             byte[] compressedBlock = new byte[buffer.Length];
             int type = 2;
@@ -127,13 +139,13 @@ namespace DVPLConverter
         /// This variant is conceived to be used for files, because it also needs to read extension of file to compress properly.
         /// </summary>
         /// <param name="buffer">Array of bytes to compress</param>
-        /// <param name="ext">Extension of file. Needed for proper compression of .tex files.</param>
-        /// <returns></returns>
-        public byte[] compressDVPL(byte[] buffer, string ext)
+        /// <param name="tex">You should only set this to "true" if the file you're compressing ends with .tex</param>
+        /// <returns>Array of compressed bytes</returns>
+        public static byte[] compressDVPL(byte[] buffer, bool tex = false)
         {
             byte[] compressedBlock = new byte[buffer.Length];
             int type = 2;
-            if (ext == ".tex")
+            if (tex)
             {
                 LZ4Codec.Encode(buffer, compressedBlock, LZ4Level.L00_FAST);
                 type = 0;
