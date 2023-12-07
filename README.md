@@ -25,18 +25,15 @@ try{
 ```
 
 ## `compressDVPL`
-There are two variants of method.
-Firstly, original .tex files don't use compression (their compression level is 0), but other files do (their compression level is 2).
-That's why if you want to use this method for compressing **exact files**, you should use this:
-```cs
-byte[] compressed = DVPLConv.compressDVPL(File.ReadAllBytes(@"C:\file.txt"), ".txt");
-```
-As you see, there is a second argument, which is used to specify extension of file. If you type **".tex"**, it will set compression level to 0 for this file.
-But if you are compressing, for example, other buffers of data, or you won't use it for .tex files, you can use simplified version:
+On one hand, it's simple.
 ```cs
 byte[] compressed = DVPLConv.compressDVPL(File.ReadAllBytes(@"C:\file.txt"));
 ```
-In that case compression level is always set to 2.
+On the other hand, original .tex files don't use compression (their compression level is 0), but other files do (their compression level is 2).
+Safest use (in my humble opinion) is to use an overload of the method
+```cs
+byte[] compressed = DVPLConv.compressDVPL(File.ReadAllBytes(path), path.EndsWith(".tex"));
+```
 
 ## Class `DVPLFooterData` 
 It consists of four elements, which are included into any DVPL file:
@@ -48,7 +45,6 @@ It consists of four elements, which are included into any DVPL file:
 They are all ***uint***.
 
 ## `readDVPLFooter`
-If you just want to read DVPL file's footer, use this:
 ```cs
 DVPLFooterData info = DVPLConv.readDVPLFooter(File.ReadAllBytes(@"C:\file.txt.dvpl"))
 ```
