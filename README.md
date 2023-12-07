@@ -13,7 +13,6 @@ There are 3 methods and 1 class that might need you.
 Let's start with what everybody is looking for.
 
 ## `decompressDVPL`
-It is meant to be used, for example, like this:
 ```cs
 using DVPLConverter;
 
@@ -22,9 +21,8 @@ DVPL DVPLConv = new DVPL();
 try{
   byte[] decompressed = DVPLConv.decompressDVPL(File.ReadAllBytes(@"C:\file.txt.dvpl"));
   File.WriteAllBytes(@"C:\file.txt", decompressed);
-}catch{ Console.WriteLine("exception lol") }
+}catch{ Console.WriteLine("Throwed an exception. Check your file.") }
 ```
-As there is a lot of throws in my code, it's better to put it in try...catch everytime lol.
 
 ## `compressDVPL`
 There are two variants of method.
